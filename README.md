@@ -56,6 +56,7 @@ python -m app.main
     ```
     
 ### Webhook Обработки платежа
+
 -   **POST /webhook/payment**
     Обработка платежей
     **Тело запроса (JSON):**
