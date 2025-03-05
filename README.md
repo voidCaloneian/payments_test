@@ -54,9 +54,10 @@ python -m app.main
 	     "password": "adminpassword"
     }
     ```
+    
 ### **Webhook Обработки платежа**
 - **POST /webhook/payment**
-  Обработка платежей
+Обработка платежей
   **Тело запроса (JSON):**
   ```json
   {
