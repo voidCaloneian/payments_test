@@ -55,17 +55,17 @@ python -m app.main
     }
     ```
     
-### **Webhook Обработки платежа**
-**POST /webhook/payment**
-Обработка платежей
-**Тело запроса (JSON):**
+### Webhook Обработки платежа
+-   **POST /webhook/payment**
+    Обработка платежей
+    **Тело запроса (JSON):**
   ```json
   {
-  "transaction_id": "5eae174f-7cd0-472c-bd36-35660f00132b",
-  "user_id": 1,
-  "account_id": 1,
-  "amount": 100,
-  "signature": "7b47e41efe564a062029da3367bde8844bea0fb049f894687cee5d57f2858bc8"
+  	"transaction_id": "5eae174f-7cd0-472c-bd36-35660f00132b",
+  	"user_id": 1,
+  	"account_id": 1,
+  	"amount": 100,
+  	"signature": "7b47e41efe564a062029da3367bde8844bea0fb049f894687cee5d57f2858bc8"
   }
   ```
 
