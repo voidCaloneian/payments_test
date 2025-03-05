@@ -15,7 +15,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql+asyncpg://app_user:app_password@db:5432/app_db
-      SECRET_KEY: gfdmhghif38yrf9ew0jkf32
+      SECRET_KEY: "gfdmhghif38yrf9ew0jkf32"
     ports:
       - "8000:8000"
 volumes:

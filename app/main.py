@@ -308,14 +308,14 @@ async def list_users(request: Request):
 @app.post("/webhook/payment")
 async def process_payment(request: Request):
     """
-    Обработка платежей через Webhook
+    Обработка платежей через **Webhook**
     """
     data = request.json
     required_fields = {"transaction_id", "user_id", "account_id", "amount", "signature"}
     if not data or not required_fields.issubset(data):
         raise InvalidUsage("Missing payment data")
 
-    # Формирование строки для подписи: значения полей в алфавитном порядке + SECRET_KEY
+    # Формирование строки для подписи: значения полей в алфавитном порядке + **SECRET_KEY**
     concat_str = f"{data['account_id']}{data['amount']}{data['transaction_id']}{data['user_id']}{SECRET_KEY}"
     computed_signature = hashlib.sha256(concat_str.encode()).hexdigest()
     if computed_signature != data["signature"]:
@@ -330,7 +330,7 @@ async def process_payment(request: Request):
         if existing_payment:
             return sanic_json({"message": "Payment already processed"})
 
-        # Если счета не существует – создаём его
+        # Проверка существования счета (без использования передаваемого account_id для создания)
         result = await session.execute(
             select(Account).where(
                 Account.id == data["account_id"], Account.user_id == data["user_id"]
@@ -344,11 +344,18 @@ async def process_payment(request: Request):
             user = user_result.scalars().first()
             if not user:
                 return sanic_json({"error": "User does not exist"}, status=400)
-            account = Account(id=data["account_id"], user_id=data["user_id"], balance=0)
+            # Не передаем id, чтобы избежать конфликта с auto-generated PK
+            account = Account(user_id=data["user_id"], balance=0)
             session.add(account)
             await session.commit()
 
-        # Создаём запись платежа и обновляем баланс счета
+            # После коммита обновляем запрос для получения установленного id, если потребуется
+            result = await session.execute(
+                select(Account).where(Account.user_id == data["user_id"])
+            )
+            account = result.scalars().first()
+
+        # Создание платежа и обновление баланса счета
         payment = Payment(
             transaction_id=uuid.UUID(data["transaction_id"]),
             account_id=account.id,
