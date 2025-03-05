@@ -56,9 +56,9 @@ python -m app.main
     ```
     
 ### **Webhook Обработки платежа**
-- **POST /webhook/payment**
+**POST /webhook/payment**
 Обработка платежей
-  **Тело запроса (JSON):**
+**Тело запроса (JSON):**
   ```json
   {
   "transaction_id": "5eae174f-7cd0-472c-bd36-35660f00132b",
