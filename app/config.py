@@ -1,3 +1,7 @@
+"""
+Конфиг приложения
+"""
+
 import os
 
 DATABASE_URL = os.environ.get(
