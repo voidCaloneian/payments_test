@@ -88,7 +88,7 @@ python -m app.main
     **Тело запроса (JSON):**
     
     ```json
-    `{
+    {
       "email": "updated@example.com",
       "full_name": "Updated Name",
       "password": "newpassword"
